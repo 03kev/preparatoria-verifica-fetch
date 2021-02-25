@@ -4,7 +4,13 @@
 
 Modificare il codice nel file **'variables.js'**. Non toccare **'main.js'**.
     
-Lì potete inserire il vostro url, il vostro nome e le soluzioni degli esercizi.
+Lì potete inserire il vostro url, il vostro nome, decidere se attivare i colori nel terminale 
+e mettere il codice per le soluzioni degli esercizi.
+
+Nella variabile **'color'** potete mettere un valore booleano. Se il vostro terminale supporta
+i colori, potete impostarla a **'true'**. Se vengono mostrati dei caratteri strani, e quindi
+i colori non sono supportati, impostare la variabile a **'false'**
+
 Nella funzione **'operatore_esercizio'** potete mettere il vostro codice per risolvere gli
 esercizi. E' presente uno switch, ed ogni suo case corrisponde all'esercizio da svolgere
 (se scrivi il tuo codice nel case 1, la richiesta verrà fatta per l'esercizio 1)
@@ -16,17 +22,17 @@ Nel return di ogni case bisogna restituire il risultato dell'esercizio corrispon
 Prima di avviare il codice devi installare i moduli di node. Scrivere nel terminale:
 
 ```
-    npm install
+npm install
 ```
 
 Per avviare il codice devi scrivere nel terminale uno dei seguenti comandi:
 
 ```
-    npm run start
+npm run start
 ```
 
 ```
-    node main.js
+node main.js
 ```
 
 ## Opzioni di input

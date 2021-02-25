@@ -5,6 +5,7 @@ const variables = require("./variables.js")
 
 const url = variables.url
 const name = variables.name
+const color = variables.color
 const operatore_esercizio = variables.operatore_esercizio
 
 const accreditamento = (url, name) => {
@@ -135,6 +136,17 @@ const menu = (url, name, legend) => {
     }
 }
 
+const coloredLegend = `\t- \x1b[31macc\x1b[0m per fare l'accreditamento
+    \t- \x1b[31mvoto\x1b[0m per vedere il punteggio
+    \t- \x1b[31mris {opzione}\x1b[0m per consegnare. Le varie opzioni:
+        \t+ \x1b[33m{n}\x1b[0m per consegnare un solo esercizio
+        \t+ \x1b[33m{n1 / n2}\x1b[0m per consegnare un range di esercizi
+        \t+ \x1b[33m{n1, n2...}\x1b[0m per consegnare vari esercizi
+    \t- \x1b[31mcon {opzione}\x1b[0m per vedere la consegna. Le varie opzioni:
+        \t+ \x1b[33m{n}\x1b[0m per vedere una sola consegna\t\t
+        \t+ \x1b[33m{n1 / n2}\x1b[0m per vedere un range di consegne\t\t
+        \t+ \x1b[33m{n1, n2...}\x1b[0m per vedere varie consegne`
+
 const legend = `\t- 'acc' per fare l'accreditamento
     \t- 'voto' per vedere il punteggio
     \t- 'ris {opzione}' per consegnare. Le varie opzioni:
@@ -146,4 +158,4 @@ const legend = `\t- 'acc' per fare l'accreditamento
         \t+ '{n1 / n2}' per vedere un range di consegne\t\t
         \t+ '{n1, n2...}' per vedere varie consegne`
 
-menu(url, name, legend)
+color ? menu(url, name, coloredLegend) : menu(url, name, legend)
