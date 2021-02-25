@@ -1,7 +1,7 @@
 "use strict"
 let e = {}
 
-e.url = "http://192.168.1.11:8080" // Url della verifica
+e.url = "http://192.168.1.231:8080" // Url della verifica
 e.name = "Kevin Muka" // Nome per l'accreditamento
 e.color = false // Colori nel terminale: disattivare se non supportati
 
