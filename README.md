@@ -9,13 +9,12 @@ e mettere il codice per le soluzioni degli esercizi.
 
 Nella variabile **'color'** potete mettere un valore booleano. Se il vostro terminale supporta
 i colori, potete impostarla a **'true'**. Se vengono mostrati dei caratteri strani, e quindi
-i colori non sono supportati, impostare la variabile a **'false'**
+i colori non sono supportati, impostare la variabile a **'false'**.
 
 Nella funzione **'operatore_esercizio'** potete mettere il vostro codice per risolvere gli
 esercizi. E' presente uno switch, ed ogni suo case corrisponde all'esercizio da svolgere
-(se scrivi il tuo codice nel case 1, la richiesta verrà fatta per l'esercizio 1)
-
-Nel return di ogni case bisogna restituire il risultato dell'esercizio corrispondente.
+(se scrivi il tuo codice nel case 1, la richiesta verrà fatta per l'esercizio 1). Nel 
+return di ogni case bisogna restituire il risultato dell'esercizio corrispondente.
 
 ## Avviare il codice
 
