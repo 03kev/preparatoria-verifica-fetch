@@ -1,15 +1,20 @@
 "use strict"
 const fetch = require("node-fetch")
 const prompt = require("prompt-sync")()
-const variables = require("./variables.js")
+let variables = require("./variables.js")
 
-const url = variables.url
-const name = variables.name
-const color = variables.color
-const operatore_esercizio = variables.operatore_esercizio
+let url = variables.url
+let name = variables.name
+let color = variables.color
+let operatoreEsercizio = variables.operatoreEsercizio
+
+const restartModule = (module) => {
+    delete require.cache[require.resolve(module)];
+    return require(module);
+}
 
 const accreditamento = (url, name) => {
-    fetch(`${url}/accreditamento`, {
+    return fetch(`${url}/accreditamento`, {
         method: "post",
         body: JSON.stringify({
             nome: name
@@ -24,7 +29,7 @@ const accreditamento = (url, name) => {
 }
 
 const voto = (url) => {
-    fetch(`${url}/voto`, {
+    return fetch(`${url}/voto`, {
         method: "get",
         headers: {
             "x-data": "true"
@@ -38,7 +43,7 @@ const voto = (url) => {
 }
 
 const risEsercizio = (url, esN) => {
-    fetch(`${url}/esercizi/${esN}`, {
+    return fetch(`${url}/esercizi/${esN}`, {
         method: "get",
         headers: {
             "x-data": "true"
@@ -49,7 +54,7 @@ const risEsercizio = (url, esN) => {
     })
     .then(resBody => {
         const data = resBody.data
-        let result = operatore_esercizio(esN, data)
+        let result = operatoreEsercizio(esN, data)
 
         return fetch(`${url}/esercizi/${esN}`, {
             method: "post",
@@ -67,7 +72,7 @@ const risEsercizio = (url, esN) => {
 }
 
 const conEsercizio = (url, esN) => {
-    fetch(`${url}/esercizi/${esN}`, {
+    return fetch(`${url}/esercizi/${esN}`, {
         method: "get",
         headers: {
             "x-data": "true"
@@ -80,28 +85,33 @@ const conEsercizio = (url, esN) => {
     .catch(err => console.log(err))
 }
 
-const menu = (url, name, legend) => {
-    console.log("Opzioni di input:\n" + legend)
-    let userInput = prompt()
-
+const menu = async (url, name, color, legend, coloredLegend) => {
     while (true) {
+        color ? console.log("Opzioni di input:\n" + coloredLegend) : console.log("Opzioni di input:\n" + legend)
+        let userInput = prompt()
+        
+        variables = restartModule("./variables.js")
+        name = variables.name
+        url = variables.url
+        color = variables.color
+        operatoreEsercizio = variables.operatoreEsercizio
+
         if (userInput.substring(0, 3) === "ris") {
             let risInput = userInput.slice(3)
             
             if (risInput.includes("/")) {
                 let risRange = risInput.split("/")
                 for (let i = +risRange[0]; i <= +risRange[1]; i++){
-                    risEsercizio(url, i)
+                    await risEsercizio(url, i)
                 }
             } else if (risInput.includes(",")) {
                 let risValues = risInput.split(",")
                 for (let i = 0; i < risValues.length; i++){
-                    risEsercizio(url, +risValues[i])
+                    await risEsercizio(url, +risValues[i])
                 }
             } else {
-                risEsercizio(url, +risInput)
+                await risEsercizio(url, +risInput)
             }
-            break
 
         } else if (userInput.substring(0, 3) === "con") {
             let conInput = userInput.slice(3)
@@ -109,29 +119,28 @@ const menu = (url, name, legend) => {
             if (conInput.includes("/")) {
                 let conRange = conInput.split("/")
                 for (let i = +conRange[0]; i <= +conRange[1]; i++){
-                    conEsercizio(url, i)
+                    await conEsercizio(url, i)
                 }
             } else if (conInput.includes(",")) {
                 let conValues = conInput.split(",")
                 for (let i = 0; i < conValues.length; i++){
-                    conEsercizio(url, +conValues[i])
+                    await conEsercizio(url, +conValues[i])
                 }
             } else {
-                conEsercizio(url, +conInput)
+                await conEsercizio(url, +conInput)
             }
-            break
 
         } else if (userInput === "acc") {
-            accreditamento(url, name)
-            break
+            await accreditamento(url, name)
 
         } else if (userInput === "voto") {
-            voto(url)
-            break
+            await voto(url)
             
+        } else if (userInput === "q") {
+            break
+
         } else {
-            console.log("Opzione non valida, riprovare:\n" + legend)
-            userInput = prompt()
+            console.log("Opzione non valida, riprovare")
         }
     }
 }
@@ -145,7 +154,8 @@ const coloredLegend = `\t- \x1b[31macc\x1b[0m per fare l'accreditamento
     \t- \x1b[31mcon {opzione}\x1b[0m per vedere la consegna. Le varie opzioni:
         \t+ \x1b[33m{n}\x1b[0m per vedere una sola consegna\t\t
         \t+ \x1b[33m{n1 / n2}\x1b[0m per vedere un range di consegne\t\t
-        \t+ \x1b[33m{n1, n2...}\x1b[0m per vedere varie consegne`
+        \t+ \x1b[33m{n1, n2...}\x1b[0m per vedere varie consegne
+    \t- \x1b[31mq\x1b[0m per uscire dal programma` 
 
 const legend = `\t- 'acc' per fare l'accreditamento
     \t- 'voto' per vedere il punteggio
@@ -156,6 +166,7 @@ const legend = `\t- 'acc' per fare l'accreditamento
     \t- 'con {opzione}' per vedere la consegna. Le varie opzioni:
         \t+ '{n}' per vedere una sola consegna\t\t
         \t+ '{n1 / n2}' per vedere un range di consegne\t\t
-        \t+ '{n1, n2...}' per vedere varie consegne`
+        \t+ '{n1, n2...}' per vedere varie consegne
+    \t- 'q' per uscire dal programma`
 
-color ? menu(url, name, coloredLegend) : menu(url, name, legend)
+menu(url, name, color, legend, coloredLegend)

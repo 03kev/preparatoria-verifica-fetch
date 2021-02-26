@@ -5,13 +5,15 @@
 Modificare il codice nel file **'variables.js'**. Non toccare **'main.js'**.
     
 Lì potete inserire il vostro url, il vostro nome, decidere se attivare i colori nel terminale 
-e mettere il codice per le soluzioni degli esercizi.
+e mettere il codice per le soluzioni degli esercizi. Quando avviate *'main.js'*, potete modificare
+il file *'variables.js'*, e quando verrà salvato sarà sincronizzato anche come modulo nel *'main.js'*:
+**non** ci sarà quindi bisogno di riavviare il programma.
 
 Nella variabile **'color'** potete mettere un valore booleano. Se il vostro terminale supporta
 i colori, potete impostarla a **'true'**. Se vengono mostrati dei caratteri strani, e quindi
 i colori non sono supportati, impostare la variabile a **'false'**.
 
-Nella funzione **'operatore_esercizio'** potete mettere il vostro codice per risolvere gli
+Nella funzione **'operatoreEsercizio'** potete mettere il vostro codice per risolvere gli
 esercizi. E' presente uno switch, ed ogni suo case corrisponde all'esercizio da svolgere
 (se scrivi il tuo codice nel case 1, la richiesta verrà fatta per l'esercizio 1). Nel 
 return di ogni case bisogna restituire il risultato dell'esercizio corrispondente.
@@ -48,3 +50,4 @@ Ci sono varie opzioni di input. Bisogna scrivere nel terminale una di quelle sot
     + '{n}' per vedere una sola consegna
     + '{n1 / n2}' per vedere un range di consegne
     + '{n1, n2...}' per vedere varie consegne
+- 'q' per uscire dal programma
