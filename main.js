@@ -52,9 +52,9 @@ const risEsercizio = (url, esN) => {
     .then(res => {
         return res.json()
     })
-    .then(resBody => {
+    .then(async resBody => {
         const data = resBody.data
-        let result = operatoreEsercizio(esN, data)
+        let result = await operatoreEsercizio(esN, data)
 
         return fetch(`${url}/esercizi/${esN}`, {
             method: "post",
