@@ -49,9 +49,7 @@ const risEsercizio = (url, esN) => {
             "x-data": "true"
         },
     })
-    .then(res => {
-        return res.json()
-    })
+    .then(res => res.json())
     .then(async resBody => {
         const data = resBody.data
         let result = await operatoreEsercizio(esN, data)
